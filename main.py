@@ -8,7 +8,7 @@ pygame.init()
 # Configuración de la pantalla
 width, height = 800, 600
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption('Triángulo Sobre Hielo')
+pygame.display.set_caption('Triángulo en Pantalla Circular')
 
 # Colores
 black = (0, 0, 0)
@@ -19,13 +19,13 @@ triangle_base = 60
 triangle_height = 100  # Hacer un vértice más largo
 triangle_x = (width - triangle_base) // 2
 triangle_y = (height - triangle_height) // 2
-triangle_speed = 5
+triangle_speed = 0.2
 triangle_angle = 0
 triangle_rotation_speed = 5
 
 # Variables de fricción
-friction = 0.98 # Fricción normal (menos deslizamiento)
-slippery_friction = 0.6  # Fricción reducida para simular hielo (más deslizamiento)
+friction = 0.995  # Fricción normal (menos deslizamiento)
+slippery_friction = 0.99  # Fricción reducida para simular hielo (más deslizamiento)
 current_friction = friction
 
 # Velocidades
@@ -69,6 +69,16 @@ while running:
         current_friction = slippery_friction
     else:
         current_friction = friction
+
+    # Verificar si el triángulo sale de la pantalla y reposicionarlo en el lado opuesto
+    if triangle_x > width:
+        triangle_x = 0
+    elif triangle_x < 0:
+        triangle_x = width
+    if triangle_y > height:
+        triangle_y = 0
+    elif triangle_y < 0:
+        triangle_y = height
 
     # Dibujar el fondo
     screen.fill(black)
